@@ -1,0 +1,6 @@
+*~*
+.classpath
+.project
+build/*
+lib/*
+web/WEB-INF/lib/*

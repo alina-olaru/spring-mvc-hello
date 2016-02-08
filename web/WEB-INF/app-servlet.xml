@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+    <!-- the application context definition for the app DispatcherServlet -->
+
+    <context:component-scan base-package="com.app.controller"/>
+    <context:component-scan base-package="com.app.interceptor"/>
+    
+    <!-- Property configurer: a property resource configurer resolves placeholders
+         for properties (e.g: something like "${app.foo.property}"). It pulls values
+         from specified properties files. -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:./conf/app.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- JSP
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	        <property name="prefix" value="/view/" />
+	        <property name="suffix" value=".jsp" />
+	        <property name="contentType" value="text/html;charset=UTF-8"/>
+	    </bean>
+	-->
+	
+	<!-- Freemarker -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+    
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/view"/>
+        <property name="freemarkerSettings">
+            <util:properties>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="output_encoding">UTF-8</prop>
+                <prop key="template_exception_handler">rethrow</prop>
+            </util:properties>
+         </property>
+    </bean>
+    
+    <!-- Interceptors -->
+    <bean id="annotationHandler" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+    <bean id="annotationMapper" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="order">
+            <value>1</value>
+        </property>
+        <property name="interceptors">
+            <list>
+                <ref bean="requestLoggingInterceptor" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Exception handler -->
+    <bean id="handlerExceptionResolver" class="com.app.resolver.ExceptionResolver">
+        <!-- List exceptions here that should NOT be handled by the exception resolver
+        <property name="excludedExceptions">
+            <list>
+                <value>[fully qualified class name]</value>
+            </list>
+        </property>
+        -->
+        
+        <!-- This is where exceptions raised during request processing in the
+             controller layer get mapped to error templates. So, if a controller
+             (handler) raises an java.lang.Exception, Spring will render the template
+             "error/general_error" -->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">${general.error.template}</prop>
+            </props>
+        </property>
+
+
+        <!-- This maps exceptions raised during controller processing (as above)
+             to HTTP status codes. So, if an java.lang.Exception is raised, the
+             template rendered will be error/general_error as described above,
+             and it will be served with HTTP status code 500 -->
+        <property name="exceptionStatusCodeMappings">
+            <props>
+                <!-- 500 Internal Server Error is the default response code for
+                     all other exceptions -->
+                <prop key="java.lang.Exception">500</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
