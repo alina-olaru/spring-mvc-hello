@@ -36,10 +36,10 @@ You will need the following in order to get things working (see **Environment Se
 7. Download the Java 8 package [here](downloaded Java 8 from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 8. Extract the contents and move them to /usr/lib/jvm: `sudo mv jdk<version> /usr/lib/jvm/`
 9. Install the new Java:
-..* `sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk<version>/bin/javac 1`
-..* `sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk<version>/bin/java 1`
-..* `sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk<version>/bin/javaws 1`
-..* `sudo update-alternatives --install /usr/bin/jar jar /usr/lib/jvm/jdk<version>/bin/jar 1`
+  * `sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk<version>/bin/javac 1`
+  * `sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk<version>/bin/java 1`
+  * `sudo update-alternatives --install /usr/bin/javaws javaws /usr/lib/jvm/jdk<version>/bin/javaws 1`
+  * `sudo update-alternatives --install /usr/bin/jar jar /usr/lib/jvm/jdk<version>/bin/jar 1`
 10. Make sure JAVA_HOME is set to the new directory under /usr/lib/jvm: `export JAVA_HOME=/usr/lib/jvm/jdk<version>`
 
 ## View Rendering
