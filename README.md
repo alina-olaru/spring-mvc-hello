@@ -52,13 +52,13 @@ You will need the following in order to get things working (see **Environment Se
 
 This project comes with Freemarker baked in, but if you'd rather use JSP for views:
 
-- Uncomment the bean defined with `org.springframework.web.servlet.view.InternalResourceViewResolver` in [./web/WEB-INF/app-servlet.xml](app-servlet.xml) (the comment with "JSP")
+- Uncomment the bean defined with `org.springframework.web.servlet.view.InternalResourceViewResolver` in [app-servlet.xml](./web/WEB-INF/app-servlet.xml) (the comment with "JSP")
 - Comment out or delete the `org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver` bean and the "freemarkerConfig" bean (in the same file).
-- remove the "freemarker" dependency in [./ivy.xml](ivy.xml)
+- remove the "freemarker" dependency in [ivy.xml](./ivy.xml)
 
 ## Logging
 
-This project uses [logback](http://logback.qos.ch/) for logging. It is configured in [./web/WEB_INF/classes/logback.xml](logback.xml) and setup with the following:
+This project uses [logback](http://logback.qos.ch/) for logging. It is configured in [logback.xml](./web/WEB_INF/classes/logback.xml) and setup with the following:
 
 - **USAGE** messages are written to `$CATALINA_HOME`/logs/app.log with daily and size limit rolling policy
 - **DEGUB** messages are turned off by default, but if turned on would be written out to `$CATALINA_HOME`/logs/app.debug.log with the same rolling policy
@@ -66,18 +66,18 @@ This project uses [logback](http://logback.qos.ch/) for logging. It is configure
 - all messages use the format: \[datetime\]\[log level\]\[tracekey\]\[user\]\[logger\]: \[message\]\[newline\]\[exception (if applicable)\]
 (initially *user* will of course be empty since the app is not setup for logging in with users, but is there as a placeholder if and when you implement such a feature)
 
-This project also provides an interceptor ([./src/main/java/com/app/interceptor/RequestLoggingInterceptor.java](RequestLoggingInterceptor.java)) to log the start and completion of all incoming requests to the app, as well as a filter ([./src/main/java/com/app/filter/RequestLoggingFilter.java]()RequestLoggingFilter.java) which creates the tracekey for log entries. [MDC](http://logback.qos.ch/manual/mdc.html) is used to log information such as tracekeys and users (see [./src/main/java/com/app/util/RequestLoggingUtil.java](RequestLoggingUtil.java)).
+This project also provides an interceptor ([RequestLoggingInterceptor.java](./src/main/java/com/app/interceptor/RequestLoggingInterceptor.java)) to log the start and completion of all incoming requests to the app, as well as a filter ([RequestLoggingFilter.java](./src/main/java/com/app/filter/RequestLoggingFilter.java) which creates the tracekey for log entries. [MDC](http://logback.qos.ch/manual/mdc.html) is used to log information such as tracekeys and users (see [RequestLoggingUtil.java](./src/main/java/com/app/util/RequestLoggingUtil.java)).
 
-Exceptions are also handled and logged appropriately (even if the exception is thrown during view rendering) via [./src/main/java/com/app/resolver/ExceptionResolver.java](ExceptionResolver.java) and `<error-page>` definitions in [./web/WEB-INF/web.xml](web.xml).
+Exceptions are also handled and logged appropriately (even if the exception is thrown during view rendering) via [ExceptionResolver.java](./src/main/java/com/app/resolver/ExceptionResolver.java) and `<error-page>` definitions in [web.xml](./web/WEB-INF/web.xml).
 
 ## What do I do now?
 
 First, you'll probably want to sanity check this project in your environment to make sure it actually works. First try running `ant ivy-resolve` to get the project dependecies. Then, run `ant tests` to verify the tests build, run, and pass succesfully. Then run `ant deploy-war` and `ant tomcat-start`. http://localhost:8080/app/hello.html should then display the *Hello World* page. Hooray! (or Dang it! It didn't work!--in which case you'll have to troubleshoot as best you can. Start by looking in the tomcat logs (`$CATALINA_HOME`/logs)).
 
-Second, you'll probably want to rename "app" with whatever your project name is. You could do this manually, but this project provides a shell script to do it for you: [./rename_project.sh](rename_project.sh)--just give it a name as an argument. ("app" is replaced in the appropriate places such as build.properties and the java package names).
+Second, you'll probably want to rename "app" with whatever your project name is. You could do this manually, but this project provides a shell script to do it for you: [rename_project.sh](./rename_project.sh)--just give it a name as an argument. ("app" is replaced in the appropriate places such as build.properties and the java package names).
 
-Now it's just a matter of taking it from here, assuming you are familiar with Java Spring MVC--creating new Controllers and methods to handle certain urls, and corresponding .ftl (or .jsp) views. Of course, most likely you will need an underlying database with Model objects and a Service layer and what not. Perhaps I will include some instructions on how to add that (probably [http://www.postgresql.org/](PostgreSQL), [http://hibernate.org/](Hibernate), and [http://www.liquibase.org/](liquibase)) here in the future.
+Now it's just a matter of taking it from here, assuming you are familiar with Java Spring MVC--creating new Controllers and methods to handle certain urls, and corresponding .ftl (or .jsp) views. Of course, most likely you will need an underlying database with Model objects and a Service layer and what not. Perhaps I will include some instructions on how to add that (probably [PostgreSQL](http://www.postgresql.org/), [Hibernate](http://hibernate.org/), and [liquibase](http://www.liquibase.org/)) here in the future.
 
-Once you are up and running, you can delete the stuff unnecessary to your project (like [./src/main/java/com/app/controller/HelloController.java](HelloController) and its corresponding test, this README, [./rename_project.sh](rename_project.sh), etc).
+Once you are up and running, you can delete the stuff unnecessary to your project (like [HelloController](./src/main/java/com/app/controller/HelloController.java) and its corresponding test, this README, [rename_project.sh](./rename_project.sh), etc).
 
-**NOTE:** there is also an ant target, `tomcat-debug-start` to provide debugging through Eclipse. In Eclipse, setup a Debug Configuration (**Run** -> **Debug Configurations...**) pointing to your project, and set the port to 8001 (you can use a different port, but be sure to change the `tomcat.jpda.address` property in [./build.properties](build.properties) to match). Just start tomcat with `tomcat-debug-start`, run **Debug As**: \[your project\] in Eclipse, set your breakpoints, and debug away.
+**NOTE:** there is also an ant target, `tomcat-debug-start` to provide debugging through Eclipse. In Eclipse, setup a Debug Configuration (**Run** -> **Debug Configurations...**) pointing to your project, and set the port to 8001 (you can use a different port, but be sure to change the `tomcat.jpda.address` property in [build.properties](./build.properties) to match). Just start tomcat with `tomcat-debug-start`, run **Debug As**: \[your project\] in Eclipse, set your breakpoints, and debug away.
