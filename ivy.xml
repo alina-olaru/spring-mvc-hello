@@ -4,8 +4,8 @@
     <info organisation="${project.organization}" module="${project.name}"/>
 
     <configurations>
-        <conf name="runtime" transitive="false"/>
-        <conf name="compile" transitive="false"/>
+        <conf name="runtime" transitive="false"/>   <!-- dependencies required at runtime -->
+        <conf name="compile" transitive="false"/>   <!-- dependencies required at compile time -->
     </configurations>
     
     <dependencies>

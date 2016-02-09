@@ -11,6 +11,7 @@
 
     <!-- the application context definition for the app DispatcherServlet -->
 
+    <!-- have Spring scan these packages to auto-register any Soring-managed beans found there -->
     <context:component-scan base-package="com.app.controller"/>
     <context:component-scan base-package="com.app.interceptor"/>
     
@@ -76,7 +77,7 @@
         <!-- This is where exceptions raised during request processing in the
              controller layer get mapped to error templates. So, if a controller
              (handler) raises an java.lang.Exception, Spring will render the template
-             "error/general_error" -->
+             defined by ${general.error.template} -->
         <property name="exceptionMappings">
             <props>
                 <prop key="java.lang.Exception">${general.error.template}</prop>
