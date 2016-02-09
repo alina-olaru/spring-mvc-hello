@@ -72,7 +72,7 @@ Exceptions are also handled and logged appropriately (even if the exception is t
 
 ## What do I do now?
 
-First, you'll probably want to sanity check this project in your environment to make sure it actually works. First try running `ant ivy-resolve` to get the project dependecies. Then, run `ant tests` to verify the tests build, run, and pass succesfully. Then run `ant deploy-war` and `ant tomcat-start`. http://localhost:8080/app/hello.html should then display the *Hello World* page. Hooray! (or Dang it! It didn't work!--in which case you'll have to troubleshoot as best you can. Start by looking in the tomcat logs (`$CATALINA_HOME`/logs)).
+First, you'll probably want to sanity check this project in your environment to make sure it actually works. First try running `ant ivy-resolve` to get the project dependecies. Then, run `ant tests` to verify the tests build, run, and pass succesfully. Then run `ant deploy-war` and `ant tomcat-start`. http://[localhost:8080/app/hello.html](localhost:8080/app/hello.html) should then display the *Hello World* page. Hooray! (or Dang it! It didn't work!--in which case you'll have to troubleshoot as best you can. Start by looking in the tomcat logs (`$CATALINA_HOME`/logs)).
 
 Second, you'll probably want to rename "app" with whatever your project name is. You could do this manually, but this project provides a shell script to do it for you: [rename_project.sh](./rename_project.sh)--just give it a name as an argument. ("app" is replaced in the appropriate places such as build.properties and the java package names).
 
