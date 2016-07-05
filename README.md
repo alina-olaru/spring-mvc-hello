@@ -39,7 +39,7 @@ You will need the following in order to get things working (see **Environment Se
 - Download the latest Ivy package [here](http://ant.apache.org/ivy/download.cgi) and extract the contents. Copy the ivy-[version].jar jar file to `$ANT_HOME`/lib/.
 - Download Tomcat 8 [here](http://mirror.sdunix.com/apache/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.tar.gz) and extract into `$WORKSPACE` (or wherever you want, but you'll have to update the `tomcat.home.dir` property in [build.properties](./build.properties) if you don't place it in `$WORKSPACE`)
 - Create the `CATALINA_HOME` environment variable and point it to your Tomcat 8 home directory
-- Download the Java 8 package [here](downloaded Java 8 from http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- Download the Java 8 package [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - Extract the contents and move them to /usr/lib/jvm: `sudo mv jdk<version> /usr/lib/jvm/`
 - Install the new Java:
   - `sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk<version>/bin/javac 1`
